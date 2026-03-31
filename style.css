@@ -1,0 +1,341 @@
+:root {
+    --bg-primary: #0a0a0f;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0b0;
+    --accent: #6c5ce7;
+    --accent-glow: rgba(108, 92, 231, 0.4);
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --card-hover: rgba(255, 255, 255, 0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    position: relative;
+    line-height: 1.6;
+}
+
+/* Background Animation */
+.background-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -2;
+    background: radial-gradient(circle at center, #13131f 0%, #0a0a0f 100%);
+    background-size: 200% 200%;
+    animation: gradientMove 15s ease infinite alternate;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 100% 100%; }
+}
+
+/* Mouse Follow Glow */
+.cursor-glow {
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--accent-glow), transparent 60%);
+    z-index: -1;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease;
+    mix-blend-mode: screen;
+    opacity: 0; /* Hidden initially, shown via JS */
+}
+
+/* Container */
+.container {
+    max-width: 900px;
+    width: 100%;
+    padding: 2.5rem;
+    z-index: 1;
+    animation: fadeIn 1s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Header styling */
+.header {
+    text-align: center;
+    margin-bottom: 4.5rem;
+}
+
+.logo-title {
+    font-size: 4.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    letter-spacing: -2px;
+}
+
+.highlight {
+    color: var(--accent);
+    background: linear-gradient(135deg, #a29bfe, #6c5ce7, #00d2ff);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 5s linear infinite;
+}
+
+@keyframes shine {
+    to { background-position: 200% center; }
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: var(--accent);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 2rem;
+}
+
+.description {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+.description strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 2.5rem;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+}
+
+/* Services Grid */
+.services-section {
+    margin-bottom: 4rem;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.service-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 24px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+}
+
+.service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.03), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.service-card:hover {
+    background: var(--card-hover);
+    border-color: rgba(108, 92, 231, 0.5);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 25px var(--accent-glow);
+    transform: translateY(-5px);
+}
+
+.service-card:hover::before {
+    transform: translateX(50%);
+}
+
+.service-icon {
+    font-size: 2.5rem;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    transition: transform 0.4s ease;
+}
+
+.service-card:hover .service-icon {
+    transform: scale(1.1) translateY(-5px);
+    color: #fff;
+}
+
+.service-card h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.service-card p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* Social Grid */
+.social-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Glassmorphism Cards */
+.social-card {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 24px;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+/* Shimmer Effect on hover */
+.social-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.03), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.social-card:hover {
+    background: var(--card-hover);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 25px var(--accent-glow);
+}
+
+.social-card:hover::before {
+    transform: translateX(50%);
+}
+
+.icon-wrapper {
+    width: 65px;
+    height: 65px;
+    border-radius: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    margin-right: 1.8rem;
+    background: rgba(255, 255, 255, 0.05);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.social-card:hover .icon-wrapper {
+    color: white;
+    transform: rotate(8deg) scale(1.15);
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-content h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    transition: transform 0.3s ease;
+}
+
+.card-content span {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+
+/* Brand specific styling on hover */
+.social-card.instagram:hover { 
+    border-color: #E1306C; 
+    box-shadow: 0 12px 25px rgba(225, 48, 108, 0.15); 
+}
+.social-card.instagram:hover .icon-wrapper { 
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); 
+}
+
+.social-card.facebook:hover { 
+    border-color: #1877F2; 
+    box-shadow: 0 12px 25px rgba(24, 119, 242, 0.15); 
+}
+.social-card.facebook:hover .icon-wrapper { 
+    background: #1877F2; 
+}
+
+.social-card.x-twitter:hover { 
+    border-color: #ffffff; 
+    box-shadow: 0 12px 25px rgba(255, 255, 255, 0.08); 
+}
+.social-card.x-twitter:hover .icon-wrapper { 
+    background: #ffffff; 
+    color: #000; 
+}
+
+.social-card.tiktok:hover { 
+    border-color: #00f2fe; 
+    box-shadow: 0 12px 25px rgba(0, 242, 254, 0.15); 
+}
+.social-card.tiktok:hover .icon-wrapper { 
+    background: #000; 
+    text-shadow: 2px 2px #00f2fe, -2px -2px #fe0979; 
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .logo-title {
+        font-size: 3.5rem;
+    }
+    .social-grid {
+        grid-template-columns: 1fr;
+    }
+    .container {
+        padding: 1.5rem;
+    }
+    .cursor-glow {
+        display: none; /* Disable glow on mobile for better performance */
+    }
+}
